@@ -1,0 +1,21 @@
+{
+  "name": "Pokémon Champions 傷害計算機",
+  "short_name": "PKMN Calc",
+  "description": "VGC 50級標準寶可夢圖鑑與對戰傷害精算器",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
