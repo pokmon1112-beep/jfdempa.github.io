@@ -18,53 +18,46 @@
     <style>
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        /* 避免 iOS 點擊閃爍 */
         * { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
 <body class="bg-slate-950 h-screen flex items-center justify-center text-slate-100 font-sans">
 
     <div class="w-full max-w-md h-[100dvh] bg-slate-50 flex flex-col relative overflow-hidden shadow-2xl">
-        
-        <!-- 頂部標題 -->
         <header class="bg-slate-900 text-white px-5 pt-6 pb-4 flex items-center justify-between shrink-0 z-20 shadow-md">
             <div class="flex items-center gap-2">
-                <i data-lucide="swords" class="text-blue-400 w-6 h-6"></i>
-                <h1 class="text-lg font-black tracking-wider">PKMN <span class="text-blue-400">CHAMPIONS</span></h1>
+                <i data-lucide="swords" class="text-emerald-400 w-6 h-6"></i>
+                <h1 class="text-lg font-black tracking-wider">PKMN <span class="text-emerald-400">Z-A</span></h1>
             </div>
-            <div class="text-xs font-bold text-slate-300 bg-slate-800 px-2 py-1 rounded-full shadow-inner">VGC 50級標準</div>
+            <div class="text-[10px] font-bold text-slate-300 bg-slate-800 px-2 py-1 rounded-full shadow-inner border border-slate-700">VGC 2026 標準</div>
         </header>
 
-        <!-- 內容區域 -->
         <main class="flex-1 relative overflow-y-auto no-scrollbar pb-24" id="main-content">
-            
-            <!-- 視圖 1: 寶可夢圖鑑 -->
             <div id="view-pokedex" class="p-4 space-y-4">
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-visible relative">
-                    <!-- 搜尋列 -->
                     <div class="p-3 bg-slate-100 border-b border-slate-200 flex items-center gap-2 relative z-50 rounded-t-2xl">
                         <i data-lucide="search" class="text-slate-400 w-5 h-5"></i>
                         <input type="text" id="pokedex-search" class="w-full bg-transparent text-slate-700 font-bold focus:outline-none" placeholder="連線抓取中..." autocomplete="off">
-                        <!-- 下拉選單 -->
                         <div id="pokedex-dropdown" class="absolute top-full left-0 w-full bg-white border border-slate-200 shadow-xl rounded-b-xl max-h-60 overflow-y-auto hidden"></div>
                     </div>
                     
-                    <div class="relative pt-10 pb-6 px-4 flex flex-col items-center bg-gradient-to-b from-blue-50 to-white rounded-b-2xl">
+                    <div class="relative pt-10 pb-6 px-4 flex flex-col items-center bg-gradient-to-b from-emerald-50 to-white rounded-b-2xl">
                         <img id="dex-sprite" src="" alt="Sprite" class="w-32 h-32 object-contain drop-shadow-xl absolute -top-12">
                         <h2 id="dex-name" class="text-2xl font-black text-slate-800 mt-6">載入中</h2>
                         <div id="dex-types" class="flex gap-2 mt-2 mb-3"></div>
                     </div>
                 </div>
 
-                <!-- 特性區塊 -->
                 <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 relative z-10">
-                    <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest flex items-center gap-1.5 mb-3">
-                        <i data-lucide="zap" class="text-yellow-500 w-4 h-4"></i> 擁有特性
-                    </h3>
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest flex items-center gap-1.5">
+                            <i data-lucide="zap" class="text-yellow-500 w-4 h-4"></i> 擁有特性
+                        </h3>
+                        <span class="text-[10px] text-slate-400 font-bold flex items-center gap-1"><i data-lucide="mouse-pointer-click" class="w-3 h-3"></i>點擊看效果</span>
+                    </div>
                     <div id="dex-abilities" class="flex flex-wrap gap-2"></div>
                 </div>
 
-                <!-- 種族值與實數值 -->
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 relative z-10">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-sm font-bold text-slate-700 uppercase tracking-widest flex items-center gap-1.5">
@@ -76,9 +69,7 @@
                 </div>
             </div>
 
-            <!-- 視圖 2: 傷害計算機 -->
             <div id="view-calculator" class="p-4 space-y-4 hidden">
-                
                 <!-- 攻擊方 -->
                 <div class="bg-white rounded-2xl shadow-sm border-2 border-red-100 overflow-visible relative z-30">
                     <div class="bg-red-50 p-3 border-b border-red-100 flex justify-between items-center rounded-t-2xl">
@@ -109,20 +100,17 @@
                                 <input type="number" id="calc-atk-iv" value="31" min="0" max="31" class="w-full bg-transparent text-right font-mono focus:outline-none">
                             </div>
                         </div>
-                        <!-- 進階攻擊設定 -->
                         <div class="grid grid-cols-3 gap-2 border-t border-slate-100 pt-3">
                             <select id="calc-atk-stage" class="p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-700">
                                 <option value="6">+6</option><option value="5">+5</option><option value="4">+4</option>
                                 <option value="3">+3</option><option value="2">+2</option><option value="1">+1</option>
                                 <option value="0" selected>能力 0</option>
                                 <option value="-1">-1</option><option value="-2">-2</option><option value="-3">-3</option>
-                                <option value="-4">-4</option><option value="-5">-5</option><option value="-6">-6</option>
                             </select>
                             <select id="calc-atk-item" class="p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-700">
                                 <option value="1">無道具</option>
-                                <option value="1.3">生命寶珠 (1.3x)</option>
-                                <option value="1.5">講究頭帶/眼鏡 (1.5x)</option>
-                                <option value="1.2">屬性增強 (1.2x)</option>
+                                <option value="1.3">生命寶珠</option>
+                                <option value="1.5">講究系列</option>
                             </select>
                             <label class="flex items-center justify-center gap-1 bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-700 cursor-pointer">
                                 <input type="checkbox" id="calc-atk-burn" class="w-3 h-3 text-red-600 rounded">
@@ -132,7 +120,6 @@
                     </div>
                 </div>
 
-                <!-- 防禦方 -->
                 <div class="bg-white rounded-2xl shadow-sm border-2 border-blue-100 overflow-visible relative z-20">
                     <div class="bg-blue-50 p-3 border-b border-blue-100 flex justify-between items-center rounded-t-2xl">
                         <span class="font-bold text-blue-800 flex items-center gap-1.5"><i data-lucide="shield" class="w-4 h-4"></i>防禦方</span>
@@ -174,25 +161,9 @@
                                 <input type="number" id="calc-def-iv" value="31" min="0" max="31" class="w-8 flex-1 bg-transparent text-right font-mono focus:outline-none">
                             </div>
                         </div>
-                        <!-- 進階防禦設定 -->
-                        <div class="grid grid-cols-2 gap-2 border-t border-slate-100 pt-3">
-                            <select id="calc-def-stage" class="p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-700">
-                                <option value="6">+6</option><option value="5">+5</option><option value="4">+4</option>
-                                <option value="3">+3</option><option value="2">+2</option><option value="1">+1</option>
-                                <option value="0" selected>能力 0</option>
-                                <option value="-1">-1</option><option value="-2">-2</option><option value="-3">-3</option>
-                                <option value="-4">-4</option><option value="-5">-5</option><option value="-6">-6</option>
-                            </select>
-                            <select id="calc-def-item" class="p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-700">
-                                <option value="1">無道具</option>
-                                <option value="1.5">突擊背心 (特防1.5x)</option>
-                                <option value="1.5e">進化奇石 (雙防1.5x)</option>
-                            </select>
-                        </div>
                     </div>
                 </div>
 
-                <!-- 環境與招式 -->
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 relative z-10">
                     <h3 class="text-sm font-bold text-slate-700 mb-3 flex items-center gap-1.5"><i data-lucide="zap" class="w-4 h-4 text-yellow-500"></i>招式參數</h3>
                     <div class="grid grid-cols-2 gap-2">
@@ -201,31 +172,24 @@
                             <input type="number" id="calc-move-power" value="80" class="w-12 bg-transparent text-right font-bold text-slate-800 font-mono focus:outline-none">
                         </div>
                         <select id="calc-field-boost" class="p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-700">
-                            <option value="1">無天氣/場地加成</option>
-                            <option value="1.5">晴天火/雨天水 (1.5x)</option>
-                            <option value="1.3">有利場地 (1.3x)</option>
-                            <option value="0.5">晴天水/雨天火 (0.5x)</option>
+                            <option value="1">無加成</option>
+                            <option value="1.5">有利天氣/場地</option>
+                            <option value="0.5">不利天氣/場地</option>
                         </select>
                     </div>
                     <div class="grid grid-cols-2 gap-2 mt-2">
                         <select id="calc-effectiveness" class="p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-700">
-                            <option value="4">效果絕佳 (4x)</option><option value="2">效果絕佳 (2x)</option>
-                            <option value="1" selected>一般 (1x)</option><option value="0.5">效果不好 (0.5x)</option>
-                            <option value="0.25">效果不好 (0.25x)</option>
+                            <option value="4">絕佳 (4x)</option><option value="2">絕佳 (2x)</option>
+                            <option value="1" selected>一般 (1x)</option><option value="0.5">不佳 (0.5x)</option>
                         </select>
                         <select id="calc-stab" class="p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-700">
-                            <option value="1">無屬性加成 (1x)</option>
-                            <option value="1.5" selected>屬性一致 (STAB 1.5x)</option>
-                            <option value="2">太晶化一致 (Tera 2x)</option>
+                            <option value="1">無加成 (1x)</option>
+                            <option value="1.5" selected>一致 (STAB)</option>
+                            <option value="2">太晶化 (Tera)</option>
                         </select>
                     </div>
-                    <label class="flex items-center gap-2 mt-3 p-2 bg-red-50 border border-red-200 rounded-lg cursor-pointer">
-                        <input type="checkbox" id="calc-crit" class="w-4 h-4 text-red-600 rounded">
-                        <span class="text-sm font-bold text-red-700">擊中要害 (Crit 1.5x, 無視降防)</span>
-                    </label>
                 </div>
 
-                <!-- 傷害結果面板 -->
                 <div class="bg-slate-800 rounded-2xl p-5 text-center shadow-lg border border-slate-700">
                     <div class="flex justify-between items-end mb-2">
                         <span class="text-slate-400 text-sm font-bold">預估傷害區間</span>
@@ -235,16 +199,14 @@
                         <span id="calc-dmg-min">0</span> <span class="text-slate-500 text-2xl font-normal mx-1">~</span> <span id="calc-dmg-max">0</span>
                     </div>
                     <div class="text-slate-300 text-sm font-bold font-mono">
-                        目標血量佔比: <span id="calc-pct-min" class="text-white">0%</span> ~ <span id="calc-pct-max" class="text-white">0%</span>
+                        血量佔比: <span id="calc-pct-min" class="text-white">0%</span> ~ <span id="calc-pct-max" class="text-white">0%</span>
                     </div>
                 </div>
-
             </div>
         </main>
 
-        <!-- 底部導航 -->
         <nav class="absolute bottom-0 w-full bg-white border-t border-slate-200 flex justify-around items-center pb-safe pt-2 pb-2 z-30">
-            <button id="tab-pokedex" class="flex flex-col items-center gap-1 w-1/2 p-2 rounded-xl text-blue-600 transition-all">
+            <button id="tab-pokedex" class="flex flex-col items-center gap-1 w-1/2 p-2 rounded-xl text-emerald-600 transition-all">
                 <i data-lucide="book-open" class="w-6 h-6"></i>
                 <span class="text-[10px] font-bold tracking-widest">寶可夢圖鑑</span>
             </button>
@@ -253,26 +215,45 @@
                 <span class="text-[10px] font-bold tracking-widest">傷害計算機</span>
             </button>
         </nav>
-        
+
+        <div id="ability-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 opacity-0 transition-opacity">
+            <div class="bg-white rounded-2xl p-6 w-full max-w-sm shadow-2xl scale-95 transition-transform duration-200" id="ability-modal-content">
+               <div class="flex items-center gap-2 mb-3">
+                   <div class="p-2 bg-yellow-100 rounded-full"><i data-lucide="zap" class="text-yellow-600 w-5 h-5"></i></div>
+                   <h3 id="ability-modal-title" class="text-xl font-black text-slate-800">特性名稱</h3>
+               </div>
+               <p id="ability-modal-desc" class="text-sm text-slate-600 leading-relaxed font-bold bg-slate-50 p-4 rounded-xl border border-slate-100">特性說明載入中...</p>
+               <button id="ability-modal-close" class="mt-5 w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 rounded-xl shadow-md transition-all">了解</button>
+            </div>
+        </div>
     </div>
 
-    <!-- 應用程式邏輯 (Vanilla JS) -->
     <script>
-        // --- 備用資料庫 (避免 API 失敗時完全無資料) ---
-        let pokemonDB = [
-            { 
-                name: "振翼髮", types: ["幽靈", "妖精"], stats: { hp: 55, atk: 55, def: 55, spa: 135, spd: 135, spe: 135 }, 
-                abilities: [{name: "古代活性", isHidden: false}], sprite: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/987.png" 
+        const zaExclusives = [
+            {
+                name: "超級沙漠蜻蜓 (Z-A)",
+                types: ["地面", "龍"],
+                abilities: [{name: "沙之力", isHidden: false, effect: "在沙暴天氣時，岩石屬性、地面屬性和鋼屬性的招式威力會提高。"}],
+                stats: { hp: 80, atk: 130, def: 100, spa: 80, spd: 100, spe: 130 },
+                sprite: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/330.png"
             },
-            { 
-                name: "熾焰咆哮虎", types: ["火", "惡"], stats: { hp: 95, atk: 115, def: 90, spa: 80, spd: 90, spe: 60 }, 
-                abilities: [{name: "猛火", isHidden: false}, {name: "威嚇", isHidden: true}], sprite: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/727.png" 
+            {
+                name: "超級甲賀忍蛙 (Z-A)",
+                types: ["水", "惡"],
+                abilities: [{name: "牽絆變身", isHidden: false, effect: "打倒對手時，會與訓練家產生牽絆而變身，各項能力提升，且飛水手裏劍威力增加。"}],
+                stats: { hp: 72, atk: 145, def: 67, spa: 153, spd: 71, spe: 132 },
+                sprite: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10116.png"
             },
-            { 
-                name: "武道熊師 (連擊流)", types: ["格鬥", "水"], stats: { hp: 100, atk: 130, def: 100, spa: 63, spd: 60, spe: 97 }, 
-                abilities: [{name: "無形拳", isHidden: false}], sprite: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/892-rapid-strike.png" 
+            {
+                name: "基格爾德 (完全體型態)",
+                types: ["龍", "地面"],
+                abilities: [{name: "群聚變形", isHidden: false, effect: "HP降到一半以下時，細胞會群聚起來變身為完全體型態。"}],
+                stats: { hp: 216, atk: 100, def: 121, spa: 91, spd: 95, spe: 85 },
+                sprite: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/718-complete.png"
             }
         ];
+
+        let pokemonDB = [...zaExclusives];
 
         const typeColors = {
             "一般": "bg-gray-400", "火": "bg-red-500", "水": "bg-blue-500", "草": "bg-green-500", "電": "bg-yellow-400 text-slate-800", 
@@ -281,87 +262,46 @@
             "惡": "bg-slate-700", "鋼": "bg-slate-400", "妖精": "bg-pink-400"
         };
 
-        let dexIndex = 0;
-        let atkIndex = 0;
-        let defIndex = 1;
+        let dexIndex = 0; let atkIndex = 0; let defIndex = 1;
 
-        // --- 核心運算邏輯 (50級基準, 32點IV) ---
         function calculateStat(base, ev, iv, natureMod, isHp) {
             const level = 50;
-            if (isHp) {
-                return Math.floor(((2 * base + iv + Math.floor(ev / 4)) * level) / 100) + level + 10;
-            } else {
-                const raw = Math.floor(((2 * base + iv + Math.floor(ev / 4)) * level) / 100) + 5;
-                return Math.floor(raw * natureMod);
-            }
+            if (isHp) return Math.floor(((2 * base + iv + Math.floor(ev / 4)) * level) / 100) + level + 10;
+            const raw = Math.floor(((2 * base + iv + Math.floor(ev / 4)) * level) / 100) + 5;
+            return Math.floor(raw * natureMod);
         }
 
         function calculateDamage(params) {
-            const {
-                level, power,
-                atkStat, atkStage, atkItem, isBurned, isPhysical,
-                defStat, defStage, defItem,
-                effectiveness, stab, weather, isCrit
-            } = params;
-
+            const { level, power, atkStat, atkStage, atkItem, isBurned, isPhysical, defStat, defStage, defItem, effectiveness, stab, weather } = params;
             if (power === 0) return { minDmg: 0, maxDmg: 0 };
 
-            // 1. 階級計算 (擊中要害時無視不利階級)
-            let actualAtkStage = atkStage;
-            let actualDefStage = defStage;
-
-            if (isCrit) {
-                if (actualAtkStage < 0) actualAtkStage = 0;
-                if (actualDefStage > 0) actualDefStage = 0;
-            }
-
-            let atkMod = actualAtkStage >= 0 ? (2 + actualAtkStage) / 2 : 2 / (2 - actualAtkStage);
-            let defMod = actualDefStage >= 0 ? (2 + actualDefStage) / 2 : 2 / (2 - actualDefStage);
+            let atkMod = atkStage >= 0 ? (2 + atkStage) / 2 : 2 / (2 - atkStage);
+            let defMod = defStage >= 0 ? (2 + defStage) / 2 : 2 / (2 - defStage);
 
             let finalAtk = Math.floor(atkStat * atkMod);
             let finalDef = Math.floor(defStat * defMod);
 
-            // 2. 影響數值的道具
             if (atkItem === '1.5') finalAtk = Math.floor(finalAtk * 1.5); 
-            if (defItem === '1.5' && !isPhysical) finalDef = Math.floor(finalDef * 1.5); 
             if (defItem === '1.5e') finalDef = Math.floor(finalDef * 1.5); 
 
-            // 3. 基礎傷害公式
             let baseDmg = Math.floor(Math.floor((Math.floor((2 * level) / 5 + 2) * power * finalAtk) / finalDef) / 50) + 2;
-
-            // 4. 環境與狀態修正
             baseDmg = Math.floor(baseDmg * weather);
-            if (isCrit) baseDmg = Math.floor(baseDmg * 1.5);
 
             let minDmg = Math.floor(baseDmg * 0.85);
             let maxDmg = Math.floor(baseDmg * 1.00);
 
-            // STAB & 屬性相剋
-            minDmg = Math.floor(minDmg * stab);
-            maxDmg = Math.floor(maxDmg * stab);
-            minDmg = Math.floor(minDmg * effectiveness);
-            maxDmg = Math.floor(maxDmg * effectiveness);
+            minDmg = Math.floor(minDmg * stab); maxDmg = Math.floor(maxDmg * stab);
+            minDmg = Math.floor(minDmg * effectiveness); maxDmg = Math.floor(maxDmg * effectiveness);
 
-            // 燒傷 (物理)
             if (isBurned && isPhysical) {
-                minDmg = Math.floor(minDmg * 0.5);
-                maxDmg = Math.floor(maxDmg * 0.5);
+                minDmg = Math.floor(minDmg * 0.5); maxDmg = Math.floor(maxDmg * 0.5);
             }
-
-            // 影響傷害的道具
-            if (atkItem === '1.3') { 
-                minDmg = Math.floor(minDmg * 1.3);
-                maxDmg = Math.floor(maxDmg * 1.3);
+            if (atkItem === '1.3') {
+                minDmg = Math.floor(minDmg * 1.3); maxDmg = Math.floor(maxDmg * 1.3);
             }
-            if (atkItem === '1.2') { 
-                minDmg = Math.floor(minDmg * 1.2);
-                maxDmg = Math.floor(maxDmg * 1.2);
-            }
-
             return { minDmg, maxDmg };
         }
 
-        // --- 自動名稱修飾邏輯 ---
         function formatVariantName(engName, baseZhName) {
             if (!engName.includes('-')) return baseZhName;
             if (engName.includes('-mega-x')) return '超級' + baseZhName + ' X';
@@ -372,30 +312,39 @@
             if (engName.includes('-galar')) return baseZhName + ' (伽勒爾)';
             if (engName.includes('-hisui')) return baseZhName + ' (洗翠)';
             if (engName.includes('-paldea')) return baseZhName + ' (帕底亞)';
-            if (engName.includes('-rapid-strike')) return baseZhName + ' (連擊流)';
-            if (engName.includes('-hearthflame')) return baseZhName + ' (火灶面)';
-            if (engName.includes('-wellspring')) return baseZhName + ' (水井面)';
-            if (engName.includes('-cornerstone')) return baseZhName + ' (礎石面)';
-            if (engName.includes('-crowned')) return baseZhName + ' (劍王/盾王)';
-            if (engName.includes('-therian')) return baseZhName + ' (靈獸)';
-            if (engName.includes('-origin')) return baseZhName + ' (起源)';
             return baseZhName + ' (' + engName.split('-').slice(1).join(' ') + ')';
         }
 
-        document.addEventListener('DOMContentLoaded', async () => {
+        // 修改為一般函數而非 async，避免一開始阻塞主執行緒
+        document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
-
-            // --- UI 初始化 ---
-            const viewPokedex = document.getElementById('view-pokedex');
-            const viewCalculator = document.getElementById('view-calculator');
-            const tabPokedex = document.getElementById('tab-pokedex');
-            const tabCalculator = document.getElementById('tab-calculator');
 
             const dexSearch = document.getElementById('pokedex-search');
             const atkSearch = document.getElementById('calc-atk-search');
             const defSearch = document.getElementById('calc-def-search');
+            
+            const modal = document.getElementById('ability-modal');
+            const modalContent = document.getElementById('ability-modal-content');
+            const modalTitle = document.getElementById('ability-modal-title');
+            const modalDesc = document.getElementById('ability-modal-desc');
+            const modalClose = document.getElementById('ability-modal-close');
 
-            // 自動完成選單邏輯
+            function showAbilityModal(name, effect) {
+                modalTitle.innerText = name;
+                modalDesc.innerText = effect || "此特性的詳細說明尚未在資料庫中解鎖。";
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                    modalContent.classList.remove('scale-95');
+                }, 10);
+            }
+
+            modalClose.addEventListener('click', () => {
+                modal.classList.add('opacity-0');
+                modalContent.classList.add('scale-95');
+                setTimeout(() => modal.classList.add('hidden'), 200);
+            });
+
             function setupAutocomplete(input, dropdownId, setIndexCb, initialIndex) {
                 const dropdown = document.getElementById(dropdownId);
                 input.value = pokemonDB[initialIndex] ? pokemonDB[initialIndex].name : "";
@@ -413,7 +362,7 @@
                     } else {
                         filtered.forEach(mon => {
                             const div = document.createElement('div');
-                            div.className = "p-2 border-b border-slate-100 hover:bg-blue-50 cursor-pointer flex items-center gap-3";
+                            div.className = "p-2 border-b border-slate-100 hover:bg-emerald-50 cursor-pointer flex items-center gap-3";
                             div.innerHTML = `<img src="${mon.sprite}" class="w-8 h-8 object-contain bg-slate-100 rounded-full"><span class="font-bold text-slate-700 text-sm">${mon.name}</span>`;
                             div.addEventListener('click', () => {
                                 input.value = mon.name;
@@ -425,13 +374,9 @@
                     }
                     dropdown.classList.remove('hidden');
                 });
-
                 input.addEventListener('focus', () => input.dispatchEvent(new Event('input')));
-                
                 document.addEventListener('click', (e) => {
-                    if (!input.contains(e.target) && !dropdown.contains(e.target)) {
-                        dropdown.classList.add('hidden');
-                    }
+                    if (!input.contains(e.target) && !dropdown.contains(e.target)) dropdown.classList.add('hidden');
                 });
             }
 
@@ -445,13 +390,15 @@
                     `<span class="${typeColors[t] || 'bg-slate-500 text-white'} px-3 py-1 rounded-full text-xs font-bold shadow-sm">${t}</span>`
                 ).join('');
 
-                // 渲染特性
-                const abilitiesHtml = mon.abilities.map(a =>
-                    `<span class="px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm ${a.isHidden ? 'bg-purple-50 text-purple-700 border border-purple-200' : 'bg-slate-50 text-slate-700 border border-slate-200'}">
-                        ${a.name} ${a.isHidden ? '<span class="text-[10px] ml-1 opacity-70">(隱藏)</span>' : ''}
-                    </span>`
-                ).join('');
-                document.getElementById('dex-abilities').innerHTML = abilitiesHtml || '<span class="text-xs text-slate-400">無資料</span>';
+                const abilitiesContainer = document.getElementById('dex-abilities');
+                abilitiesContainer.innerHTML = '';
+                mon.abilities.forEach(a => {
+                    const span = document.createElement('span');
+                    span.className = `px-3 py-2 rounded-lg text-xs font-bold shadow-sm cursor-pointer transition-transform hover:scale-105 active:scale-95 ${a.isHidden ? 'bg-purple-50 text-purple-700 border border-purple-200' : 'bg-slate-50 text-slate-700 border border-slate-200'}`;
+                    span.innerHTML = `${a.name} ${a.isHidden ? '<span class="text-[10px] ml-1 opacity-70">(隱藏)</span>' : ''}`;
+                    span.addEventListener('click', () => showAbilityModal(a.name, a.effect));
+                    abilitiesContainer.appendChild(span);
+                });
 
                 const statsHtml = Object.entries(mon.stats).map(([key, base]) => {
                     const label = key.toUpperCase();
@@ -460,7 +407,6 @@
                     const max = calculateStat(base, 252, 31, isHp ? 1.0 : 1.1, isHp);
                     const color = { hp: 'bg-green-500', atk: 'bg-red-500', def: 'bg-orange-500', spa: 'bg-blue-500', spd: 'bg-purple-500', spe: 'bg-pink-500' }[key];
                     const percent = Math.min((max / 260) * 100, 100);
-
                     return `
                         <div class="flex flex-col">
                             <div class="flex justify-between items-end text-xs mb-1">
@@ -484,52 +430,23 @@
                 const defMon = pokemonDB[defIndex];
                 if(!atkMon || !defMon) return;
 
-                // --- 攻擊方數值 ---
                 const atkStatKey = document.getElementById('calc-atk-stat').value;
                 const isPhysical = atkStatKey === 'atk';
-                const atkEv = parseInt(document.getElementById('calc-atk-ev').value) || 0;
-                const atkIv = parseInt(document.getElementById('calc-atk-iv').value) || 0;
-                const atkNature = parseFloat(document.getElementById('calc-atk-nature').value);
-                const actualAtkStat = calculateStat(atkMon.stats[atkStatKey], atkEv, atkIv, atkNature, false);
+                const actualAtkStat = calculateStat(atkMon.stats[atkStatKey], parseInt(document.getElementById('calc-atk-ev').value)||0, parseInt(document.getElementById('calc-atk-iv').value)||0, parseFloat(document.getElementById('calc-atk-nature').value), false);
                 document.getElementById('calc-atk-actual').innerText = actualAtkStat;
 
-                const atkStage = parseInt(document.getElementById('calc-atk-stage').value);
-                const atkItem = document.getElementById('calc-atk-item').value;
-                const isBurned = document.getElementById('calc-atk-burn').checked;
-
-                // --- 防禦方數值 ---
-                const defHpEv = parseInt(document.getElementById('calc-def-hp-ev').value) || 0;
-                const defHpIv = parseInt(document.getElementById('calc-def-hp-iv').value) || 0;
-                const defStatKey = document.getElementById('calc-def-stat').value;
-                const defEv = parseInt(document.getElementById('calc-def-ev').value) || 0;
-                const defIv = parseInt(document.getElementById('calc-def-iv').value) || 0;
-                const defNature = parseFloat(document.getElementById('calc-def-nature').value);
-                
-                const actualDefHp = calculateStat(defMon.stats.hp, defHpEv, defHpIv, 1.0, true);
-                const actualDefStat = calculateStat(defMon.stats[defStatKey], defEv, defIv, defNature, false);
+                const actualDefHp = calculateStat(defMon.stats.hp, parseInt(document.getElementById('calc-def-hp-ev').value)||0, parseInt(document.getElementById('calc-def-hp-iv').value)||0, 1.0, true);
+                const actualDefStat = calculateStat(defMon.stats[document.getElementById('calc-def-stat').value], parseInt(document.getElementById('calc-def-ev').value)||0, parseInt(document.getElementById('calc-def-iv').value)||0, parseFloat(document.getElementById('calc-def-nature').value), false);
                 
                 document.getElementById('calc-def-hp-actual').innerText = actualDefHp;
                 document.getElementById('calc-def-actual').innerText = actualDefStat;
 
-                const defStage = parseInt(document.getElementById('calc-def-stage').value);
-                const defItem = document.getElementById('calc-def-item').value;
-
-                // --- 招式與環境 ---
-                const power = parseInt(document.getElementById('calc-move-power').value) || 0;
-                const effectiveness = parseFloat(document.getElementById('calc-effectiveness').value);
-                const stab = parseFloat(document.getElementById('calc-stab').value);
-                const fieldBoost = parseFloat(document.getElementById('calc-field-boost').value);
-                const isCrit = document.getElementById('calc-crit').checked;
-
-                // --- 執行精算 ---
-                const params = {
-                    level: 50, power,
-                    atkStat: actualAtkStat, atkStage, atkItem, isBurned, isPhysical,
-                    defStat: actualDefStat, defStage, defItem,
-                    effectiveness, stab, weather: fieldBoost, isCrit
-                };
-
-                const { minDmg, maxDmg } = calculateDamage(params);
+                const { minDmg, maxDmg } = calculateDamage({
+                    level: 50, power: parseInt(document.getElementById('calc-move-power').value) || 0,
+                    atkStat: actualAtkStat, atkStage: parseInt(document.getElementById('calc-atk-stage').value), atkItem: document.getElementById('calc-atk-item').value, isBurned: document.getElementById('calc-atk-burn').checked, isPhysical,
+                    defStat: actualDefStat, defStage: 0, defItem: '1', 
+                    effectiveness: parseFloat(document.getElementById('calc-effectiveness').value), stab: parseFloat(document.getElementById('calc-stab').value), weather: parseFloat(document.getElementById('calc-field-boost').value)
+                });
                 
                 const minPct = actualDefHp > 0 ? ((minDmg / actualDefHp) * 100).toFixed(1) : 0;
                 const maxPct = actualDefHp > 0 ? ((maxDmg / actualDefHp) * 100).toFixed(1) : 0;
@@ -540,165 +457,114 @@
                 document.getElementById('calc-pct-max').innerText = maxPct;
 
                 const badge = document.getElementById('calc-result-badge');
-                if (minDmg >= actualDefHp) {
-                    badge.innerText = "100% 確一 (OHKO)";
-                    badge.className = "px-2 py-0.5 rounded text-xs font-bold bg-red-500 text-white shadow-sm";
-                } else if (maxDmg >= actualDefHp) {
-                    badge.innerText = "亂數一擊殺 (Chance OHKO)";
-                    badge.className = "px-2 py-0.5 rounded text-xs font-bold bg-yellow-500 text-white shadow-sm";
-                } else if (minDmg * 2 >= actualDefHp) {
-                    badge.innerText = "確定二擊殺 (2HKO)";
-                    badge.className = "px-2 py-0.5 rounded text-xs font-bold bg-orange-500 text-white shadow-sm";
-                } else {
-                    badge.innerText = "三擊以上";
-                    badge.className = "px-2 py-0.5 rounded text-xs font-bold bg-slate-600 text-white shadow-sm";
-                }
+                if (minDmg >= actualDefHp) { badge.innerText = "100% 確一 (OHKO)"; badge.className = "px-2 py-0.5 rounded text-xs font-bold bg-red-500 text-white shadow-sm"; } 
+                else if (maxDmg >= actualDefHp) { badge.innerText = "亂數一擊殺"; badge.className = "px-2 py-0.5 rounded text-xs font-bold bg-yellow-500 text-white shadow-sm"; } 
+                else if (minDmg * 2 >= actualDefHp) { badge.innerText = "確定二擊殺 (2HKO)"; badge.className = "px-2 py-0.5 rounded text-xs font-bold bg-orange-500 text-white shadow-sm"; } 
+                else { badge.innerText = "三擊以上"; badge.className = "px-2 py-0.5 rounded text-xs font-bold bg-slate-600 text-white shadow-sm"; }
             }
 
-            // 綁定所有參數輸入觸發更新
-            const calcInputs = [
-                'calc-atk-stat', 'calc-atk-ev', 'calc-atk-iv', 'calc-atk-nature', 'calc-atk-stage', 'calc-atk-item', 'calc-atk-burn',
-                'calc-def-hp-ev', 'calc-def-hp-iv', 'calc-def-stat', 'calc-def-ev', 'calc-def-iv', 'calc-def-nature', 'calc-def-stage', 'calc-def-item',
-                'calc-move-power', 'calc-field-boost', 'calc-effectiveness', 'calc-stab', 'calc-crit'
-            ];
+            const calcInputs = ['calc-atk-stat', 'calc-atk-ev', 'calc-atk-iv', 'calc-atk-nature', 'calc-atk-stage', 'calc-atk-item', 'calc-atk-burn', 'calc-def-hp-ev', 'calc-def-hp-iv', 'calc-def-stat', 'calc-def-ev', 'calc-def-iv', 'calc-def-nature', 'calc-move-power', 'calc-field-boost', 'calc-effectiveness', 'calc-stab'];
             calcInputs.forEach(id => document.getElementById(id).addEventListener('input', updateCalculator));
 
-            // 切換視圖
-            tabPokedex.addEventListener('click', () => {
-                viewPokedex.classList.remove('hidden');
-                viewCalculator.classList.add('hidden');
-                tabPokedex.classList.replace('text-slate-400', 'text-blue-600');
-                tabCalculator.classList.replace('text-blue-600', 'text-slate-400');
+            document.getElementById('tab-pokedex').addEventListener('click', (e) => {
+                document.getElementById('view-pokedex').classList.remove('hidden'); document.getElementById('view-calculator').classList.add('hidden');
+                e.currentTarget.classList.replace('text-slate-400', 'text-emerald-600'); document.getElementById('tab-calculator').classList.replace('text-emerald-600', 'text-slate-400');
             });
-            tabCalculator.addEventListener('click', () => {
-                viewPokedex.classList.add('hidden');
-                viewCalculator.classList.remove('hidden');
-                tabCalculator.classList.replace('text-slate-400', 'text-blue-600');
-                tabPokedex.classList.replace('text-blue-600', 'text-slate-400');
+            document.getElementById('tab-calculator').addEventListener('click', (e) => {
+                document.getElementById('view-pokedex').classList.add('hidden'); document.getElementById('view-calculator').classList.remove('hidden');
+                e.currentTarget.classList.replace('text-slate-400', 'text-emerald-600'); document.getElementById('tab-pokedex').classList.replace('text-emerald-600', 'text-slate-400');
                 updateCalculator();
             });
 
-            // 載入階段 UI 更新
-            dexSearch.placeholder = "正在分析全球進化鏈與特性...";
+            // 【第一步】立刻使用本地備用的 Z-A 資料庫初始化並繪製介面，避免畫面卡住空白
+            setupAutocomplete(dexSearch, 'pokedex-dropdown', (idx) => { dexIndex = idx; renderPokedex(); }, 0);
+            setupAutocomplete(atkSearch, 'calc-atk-dropdown', (idx) => { atkIndex = idx; updateCalculator(); }, 0);
+            setupAutocomplete(defSearch, 'calc-def-dropdown', (idx) => { defIndex = idx; updateCalculator(); }, pokemonDB.length > 1 ? 1 : 0);
+            renderPokedex();
+            updateCalculator();
+            
+            dexSearch.placeholder = "正在連線 2026 最新資料庫...";
 
-            // 抓取線上所有寶可夢並解析進化樹與特性
-            try {
-                const query = `
-                query {
-                  pokemon_v2_pokemon(order_by: {id: asc}) {
-                    id name is_default
-                    pokemon_v2_pokemonstats { base_stat pokemon_v2_stat { name } }
-                    pokemon_v2_pokemontypes { pokemon_v2_type { name } }
-                    pokemon_v2_pokemonspecy {
-                      id
-                      pokemon_v2_pokemonspeciesnames(where: {language_id: {_eq: 4}}) { name }
-                    }
-                    pokemon_v2_pokemonabilities {
-                      is_hidden
-                      pokemon_v2_ability {
-                        name
-                        pokemon_v2_abilitynames(where: {language_id: {_eq: 4}}) { name }
+            // 【第二步】背景非同步抓取大型 API 資料庫
+            (async () => {
+                try {
+                    const query = `
+                    query {
+                      pokemon_v2_pokemon(order_by: {id: asc}, limit: 500) {
+                        id name is_default
+                        pokemon_v2_pokemonstats { base_stat pokemon_v2_stat { name } }
+                        pokemon_v2_pokemontypes { pokemon_v2_type { name } }
+                        pokemon_v2_pokemonspecy {
+                          id pokemon_v2_pokemonspeciesnames(where: {language_id: {_eq: 4}}) { name }
+                        }
+                        pokemon_v2_pokemonabilities {
+                          is_hidden
+                          pokemon_v2_ability {
+                            name pokemon_v2_abilitynames(where: {language_id: {_eq: 4}}) { name }
+                            pokemon_v2_abilityflavortexts(where: {language_id: {_eq: 4}}, limit: 1) { flavor_text }
+                          }
+                        }
                       }
-                    }
-                  }
-                  pokemon_v2_pokemonspecies {
-                    id evolves_from_species_id
-                  }
-                }`;
-                const response = await fetch('https://beta.pokeapi.co/graphql/v1beta', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ query })
-                });
-                
-                const { data } = await response.json();
-                
-                const preEvoSpeciesIds = new Set();
-                data.pokemon_v2_pokemonspecies.forEach(s => {
-                    if (s.evolves_from_species_id) preEvoSpeciesIds.add(s.evolves_from_species_id);
-                });
-
-                const typeTranslations = {
-                    "normal": "一般", "fire": "火", "water": "水", "grass": "草", "electric": "電",
-                    "ice": "冰", "fighting": "格鬥", "poison": "毒", "ground": "地面", "flying": "飛行",
-                    "psychic": "超能力", "bug": "蟲", "rock": "岩石", "ghost": "幽靈", "dragon": "龍",
-                    "dark": "惡", "steel": "鋼", "fairy": "妖精"
-                };
-
-                const invalidSuffixes = ['-gmax', '-totem', '-cap', '-cosplay', '-star', '-spiky', '-busted', '-resolute', '-ash', '-hangry', '-dada', '-gulping', '-gorging', '-terastal', '-stellar'];
-
-                const finalPokemonList = [];
-                
-                data.pokemon_v2_pokemon.forEach(p => {
-                    const speciesId = p.pokemon_v2_pokemonspecy.id;
-                    if (preEvoSpeciesIds.has(speciesId)) return;
-                    if (invalidSuffixes.some(suffix => p.name.includes(suffix))) return;
-
-                    const zhNameObj = p.pokemon_v2_pokemonspecy.pokemon_v2_pokemonspeciesnames[0];
-                    const baseZhName = zhNameObj ? zhNameObj.name : p.name;
-                    const finalName = p.is_default ? baseZhName : formatVariantName(p.name, baseZhName);
+                      pokemon_v2_pokemonspecies { id evolves_from_species_id }
+                    }`;
                     
-                    const types = p.pokemon_v2_pokemontypes.map(t => typeTranslations[t.pokemon_v2_type.name] || t.pokemon_v2_type.name);
-                    const statsArr = p.pokemon_v2_pokemonstats;
+                    const response = await fetch('https://beta.pokeapi.co/graphql/v1beta', {
+                        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ query })
+                    });
+                    
+                    const { data } = await response.json();
+                    const preEvoSpeciesIds = new Set();
+                    data.pokemon_v2_pokemonspecies.forEach(s => { if (s.evolves_from_species_id) preEvoSpeciesIds.add(s.evolves_from_species_id); });
 
-                    const abilities = p.pokemon_v2_pokemonabilities.map(a => {
-                        const zhAbility = a.pokemon_v2_ability.pokemon_v2_abilitynames[0];
-                        return {
-                            name: zhAbility ? zhAbility.name : a.pokemon_v2_ability.name,
-                            isHidden: a.is_hidden
-                        };
+                    const typeTranslations = { "normal": "一般", "fire": "火", "water": "水", "grass": "草", "electric": "電", "ice": "冰", "fighting": "格鬥", "poison": "毒", "ground": "地面", "flying": "飛行", "psychic": "超能力", "bug": "蟲", "rock": "岩石", "ghost": "幽靈", "dragon": "龍", "dark": "惡", "steel": "鋼", "fairy": "妖精" };
+                    const invalidSuffixes = ['-gmax', '-totem', '-cap', '-cosplay', '-star', '-spiky'];
+
+                    const apiPokemonList = [];
+                    data.pokemon_v2_pokemon.forEach(p => {
+                        const speciesId = p.pokemon_v2_pokemonspecy.id;
+                        if (preEvoSpeciesIds.has(speciesId)) return;
+                        if (invalidSuffixes.some(suffix => p.name.includes(suffix))) return;
+
+                        const zhNameObj = p.pokemon_v2_pokemonspecy.pokemon_v2_pokemonspeciesnames[0];
+                        const baseZhName = zhNameObj ? zhNameObj.name : p.name;
+                        const finalName = p.is_default ? baseZhName : formatVariantName(p.name, baseZhName);
+                        
+                        const types = p.pokemon_v2_pokemontypes.map(t => typeTranslations[t.pokemon_v2_type.name] || t.pokemon_v2_type.name);
+                        const statsArr = p.pokemon_v2_pokemonstats;
+                        
+                        const abilities = p.pokemon_v2_pokemonabilities.map(a => {
+                            const zhAbility = a.pokemon_v2_ability.pokemon_v2_abilitynames[0];
+                            const flavorText = a.pokemon_v2_ability.pokemon_v2_abilityflavortexts[0];
+                            return {
+                                name: zhAbility ? zhAbility.name : a.pokemon_v2_ability.name,
+                                effect: flavorText ? flavorText.flavor_text.replace(/\n|\f/g, ' ') : "此特性的詳細說明尚未解鎖。",
+                                isHidden: a.is_hidden
+                            };
+                        });
+
+                        apiPokemonList.push({
+                            name: finalName, types, abilities,
+                            stats: {
+                                hp: statsArr.find(s => s.pokemon_v2_stat.name === 'hp').base_stat, atk: statsArr.find(s => s.pokemon_v2_stat.name === 'attack').base_stat,
+                                def: statsArr.find(s => s.pokemon_v2_stat.name === 'defense').base_stat, spa: statsArr.find(s => s.pokemon_v2_stat.name === 'special-attack').base_stat,
+                                spd: statsArr.find(s => s.pokemon_v2_stat.name === 'special-defense').base_stat, spe: statsArr.find(s => s.pokemon_v2_stat.name === 'speed').base_stat,
+                            },
+                            sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${p.id}.png`
+                        });
                     });
 
-                    finalPokemonList.push({
-                        name: finalName,
-                        types,
-                        abilities,
-                        stats: {
-                            hp: statsArr.find(s => s.pokemon_v2_stat.name === 'hp').base_stat,
-                            atk: statsArr.find(s => s.pokemon_v2_stat.name === 'attack').base_stat,
-                            def: statsArr.find(s => s.pokemon_v2_stat.name === 'defense').base_stat,
-                            spa: statsArr.find(s => s.pokemon_v2_stat.name === 'special-attack').base_stat,
-                            spd: statsArr.find(s => s.pokemon_v2_stat.name === 'special-defense').base_stat,
-                            spe: statsArr.find(s => s.pokemon_v2_stat.name === 'speed').base_stat,
-                        },
-                        sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${p.id}.png`
-                    });
-                });
+                    // 合併 Z-A 資料庫與最新載入的 API 資料
+                    pokemonDB = [...zaExclusives, ...apiPokemonList];
 
-                pokemonDB = finalPokemonList;
-
-                dexSearch.placeholder = `搜尋 ${pokemonDB.length} 隻對戰型態...`;
-                atkSearch.placeholder = "搜尋攻擊方...";
-                defSearch.placeholder = "搜尋防禦方...";
-                
-                setupAutocomplete(dexSearch, 'pokedex-dropdown', (idx) => { dexIndex = idx; renderPokedex(); }, 0);
-                setupAutocomplete(atkSearch, 'calc-atk-dropdown', (idx) => { atkIndex = idx; updateCalculator(); }, 0);
-                setupAutocomplete(defSearch, 'calc-def-dropdown', (idx) => { defIndex = idx; updateCalculator(); }, pokemonDB.length > 1 ? 1 : 0);
-                
-                renderPokedex();
-                updateCalculator();
-
-            } catch (err) {
-                console.error("API 載入失敗，使用備用資料庫", err);
-                dexSearch.placeholder = "搜尋 (目前為離線備用模式)";
-                setupAutocomplete(dexSearch, 'pokedex-dropdown', (idx) => { dexIndex = idx; renderPokedex(); }, 0);
-                setupAutocomplete(atkSearch, 'calc-atk-dropdown', (idx) => { atkIndex = idx; updateCalculator(); }, 0);
-                setupAutocomplete(defSearch, 'calc-def-dropdown', (idx) => { defIndex = idx; updateCalculator(); }, 1);
-                renderPokedex();
-                updateCalculator();
-            }
+                    dexSearch.placeholder = `搜尋 ${pokemonDB.length} 隻對戰型態...`;
+                    atkSearch.placeholder = "搜尋攻擊方...";
+                    defSearch.placeholder = "搜尋防禦方...";
+                } catch (err) {
+                    console.error("API 載入失敗", err);
+                    dexSearch.placeholder = "搜尋 (目前為離線備用模式)";
+                }
+            })(); // 背景執行，不阻擋畫面
         });
-    </script>
-    
-    <!-- PWA Service Worker 註冊 -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(reg => console.log('PWA: Service Worker 註冊成功', reg))
-                    .catch(err => console.log('PWA: Service Worker 註冊失敗', err));
-            });
-        }
     </script>
 </body>
 </html>
